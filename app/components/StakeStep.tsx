@@ -453,10 +453,10 @@ const TabAdmin: FC<TabProps> = ({ type, stepTokenBalance, xStepTokenBalance, usd
     <div className={styles.stakeStepSubmit}>
       <Button disabled={
         amountSTEP == null || amountSTEP == '0'
-      } block type="primary" onClick={(e)=>{handleClick('0')}}>S   E   T</Button>;
+      } block type="primary" onClick={(e)=>{handleClick('0');}}>S   E   T</Button>
     </div>
     <div className={styles.stakeStepSubmit}>
-      <Button block type="primary" onClick={(e)=>{handleClick('1')}}>Withdraw All Fee</Button>;
+      <Button block type="primary" onClick={(e)=>{handleClick('1');}}>Withdraw All Fee</Button>
     </div>
   </div>;
 };
