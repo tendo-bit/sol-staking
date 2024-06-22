@@ -139,7 +139,7 @@ const Tab: FC<TabProps> = ({ type, stepTokenBalance, xStepTokenBalance, usdStep,
       }
       setAmountSTEP(input);
       setAmountXSTEP(parseFloat(String(roundToNDecimals(Number(input) / (Number(stepXStep)), 9) || 0)).toString());
-    } else if (tokenSymbol == TOKEN_SYMBOL.XSTEP) {
+    } else if (String(tokenSymbol) == TOKEN_SYMBOL.XSTEP) {
       if (!input) {
         setAmountSTEP(undefined);
         setAmountXSTEP(undefined);
@@ -354,7 +354,7 @@ const TabAdmin: FC<TabProps> = ({ type, stepTokenBalance, xStepTokenBalance, usd
       }
       setAmountSTEP(input);
       setAmountXSTEP(parseFloat(String(roundToNDecimals(Number(input) / (Number(stepXStep)), 9) || 0)).toString());
-    } else if (tokenSymbol == TOKEN_SYMBOL.XSTEP) {
+    } else if (String(tokenSymbol) == TOKEN_SYMBOL.XSTEP) {
       if (!input) {
         setAmountSTEP(undefined);
         setAmountXSTEP(undefined);
@@ -555,7 +555,7 @@ export const StakeStep: FC = () => {
       const user = new PublicKey(publicKey.toBase58());
 
       let amount = data.amountSTEP;
-      let amountStr = ((amount * 1.0) * 10 ** DECIMALS).toString();
+      let amountStr = ((Number(amount) * 1.0) * 10 ** DECIMALS).toString();
       let solAmount = new BN(amountStr);
 
       let vaultSeeds = [
@@ -683,7 +683,7 @@ export const StakeStep: FC = () => {
     }
 
     const bigNumberAmountWithoutDecimals = new anchor.BN(Number(amount) * 1e9);
-    const instruction = await program.methods[data.type.toLowerCase()](nonce, bigNumberAmountWithoutDecimals)
+    const instruction = await program.methods[String(data.type).toLowerCase()](nonce, bigNumberAmountWithoutDecimals)
       .accounts(params)
       .instruction();
 
