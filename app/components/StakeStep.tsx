@@ -43,7 +43,7 @@ interface InputPrefixProps {
   showImg: string;
 }
 
-const InputPrefix: FC<InputPrefixProps> = ({ iconUrl, tokenText, showImg = '1' }) => {
+const InputPrefix: FC<InputPrefixProps> = ({ iconUrl, tokenText, showImg }) => {
   return <div className={styles.stakeStepInputPrefix}>
     { (showImg == '1') && <img alt="" src={iconUrl} /> }
     <span>{tokenText}</span>
@@ -226,6 +226,7 @@ const Tab: FC<TabProps> = ({ type, stepTokenBalance, xStepTokenBalance, usdStep,
             placeholder="0.00"
             autoComplete='off'
             value={amountSTEP}
+            addonAfter
             prefix={<InputPrefix showImg='1' iconUrl={stepIconUrl} tokenText={TOKEN_SYMBOL.STEP} />}
             stringMode
           />
