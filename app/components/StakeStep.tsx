@@ -458,7 +458,7 @@ const TabAdmin: FC<TabProps> = ({ type, stepTokenBalance, xStepTokenBalance, usd
     <div className={styles.stakeStepSubmit}>
       <Button block type="primary" onClick={(e)=>{handleClick('1')}}>Withdraw All Fee</Button>
     </div>
-  </div>;
+  </div>
 };
 
 // Staking component
@@ -544,13 +544,14 @@ export const StakeStep: FC = () => {
       setTokenAccountBalanceSTEP(balance / 1e9);
       
       stakeEntryData = await program.account.stakeEntry.fetchNullable(stakeEntryPda[0]);
-      if(!stakeEntryData)throw "err"
+      if(!stakeEntryData)throw "err";
       setTokenAccountBalanceXSTEP(new BN(stakeEntryData.balance).toNumber() / 1e9);
       
       return tx;
 
     } else if (data.type === TabType.Unstake) {
       const DECIMALS = 9;
+      if(!publicKey)throw "err";
       const user = new PublicKey(publicKey.toBase58());
 
       let amount = data.amountSTEP;
@@ -581,7 +582,7 @@ export const StakeStep: FC = () => {
         .signers([])
         .rpc();
 
-      console.log(tx)
+      console.log(tx);
       const balance = await connection.getBalance(new PublicKey(publicKey.toBase58()));
       setTokenAccountBalanceSTEP(balance / 1e9);
       
@@ -749,7 +750,7 @@ export const StakeStep: FC = () => {
         setTokenAccountBalanceSTEP(response.value.uiAmount);
       }
     }
-    if(!publicKey)throw "err"
+    if(!publicKey)throw "err";
     const balance = await connection.getBalance(new PublicKey(publicKey.toBase58()));
     setTokenAccountBalanceSTEP(balance / 1e9);
 
@@ -793,7 +794,7 @@ export const StakeStep: FC = () => {
   };
 
   const handleFormSubmit = async (data: TabFormData) => {
-    console.log("1111")
+    console.log("1111");
     try {
       const tx = await contractCall(data);
       notify.success(`${data.type} Transaction was successful`, <span>Open in explorer: <a target="_blank" href={`https://explorer.solana.com/tx/${tx}`}>{tx}</a></span>);
