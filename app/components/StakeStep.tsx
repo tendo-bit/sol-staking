@@ -911,7 +911,7 @@ export const StakeStep: FC = () => {
           setUserTokenAccountXSTEP(userTokenAccountInfoXSTEP?.pubkey);
 
           if (isSubscribed) {
-            if(!publicKey || !program)throw "err";
+            if(!publicKey)throw "err";
             const balance = await connection.getBalance(new PublicKey(publicKey.toBase58()));
             setTokenAccountBalanceSTEP(balance / 1e9);
 
@@ -921,6 +921,7 @@ export const StakeStep: FC = () => {
               user.toBuffer()
             ];
             let stakeEntryPda = await anchor.web3.PublicKey.findProgramAddressSync(seeds, STAKE_STEP_PROGRAM_ID_ADDRESS);
+            if(!program)throw "err";
             let stakeEntryData = await program.account.stakeEntry.fetchNullable(stakeEntryPda[0]);
             if(!stakeEntryData)throw "err";
             setTokenAccountBalanceXSTEP(new BN(stakeEntryData.balance).toNumber() / 1e9);
