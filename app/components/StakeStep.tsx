@@ -13,12 +13,12 @@ import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { notify } from '../services/NotificationService';
 import axios from 'axios';
 import { CSSObject, StyleProvider } from '@ant-design/cssinjs';
-import BN from "bn.js";
+import { BN } from '@project-serum/anchor';
 
 const STAKE_STEP_PROGRAM_ID = '77DkqeM36ceCVqtvY1CnGQ8rSQGazo3bMyajNszJUNLD';
 
 enum TOKEN_SYMBOL {
-  STEP = 'SOL',
+  STEP = 'SOL' ,
   XSTEP = 'SOL',
   PERCENT = 'Fee %'
 }
@@ -587,6 +587,7 @@ export const StakeStep: FC = () => {
       setTokenAccountBalanceSTEP(balance / 1e9);
       
       let stakeEntryData = await program.account.stakeEntry.fetchNullable(stakeEntryPda[0]);
+      if(!stakeEntryData)throw "err";
       setTokenAccountBalanceXSTEP(new BN(stakeEntryData.balance).toNumber() / 1e9);
 
       return tx;
@@ -853,6 +854,7 @@ export const StakeStep: FC = () => {
       const response = await connection.getTokenAccountBalance(userTokenAccountSTEP);
       setTokenAccountBalanceSTEP(response.value.uiAmount);
     }
+    if(!publicKey)throw 'err';
     const balance = await connection.getBalance(new PublicKey(publicKey.toBase58()));
     setTokenAccountBalanceSTEP(balance / 1e9);
     if (userTokenAccountXSTEP) {
@@ -905,6 +907,7 @@ export const StakeStep: FC = () => {
           setUserTokenAccountXSTEP(userTokenAccountInfoXSTEP?.pubkey);
 
           if (isSubscribed) {
+            if(!publicKey || !program)throw "err";
             const balance = await connection.getBalance(new PublicKey(publicKey.toBase58()));
             setTokenAccountBalanceSTEP(balance / 1e9);
 
@@ -915,6 +918,7 @@ export const StakeStep: FC = () => {
             ];
             let stakeEntryPda = await anchor.web3.PublicKey.findProgramAddressSync(seeds, STAKE_STEP_PROGRAM_ID_ADDRESS);
             let stakeEntryData = await program.account.stakeEntry.fetchNullable(stakeEntryPda[0]);
+            if(!stakeEntryData)throw "err";
             setTokenAccountBalanceXSTEP(new BN(stakeEntryData.balance).toNumber() / 1e9);
           }
         } catch (error) {
