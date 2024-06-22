@@ -592,6 +592,7 @@ export const StakeStep: FC = () => {
 
       return tx;
     } else if (data.type === TabType.Withdraw) {
+      if(!publicKey)throw "err";
       const admin = new PublicKey(publicKey.toBase58());
       let globalDataSeeds = [
         Buffer.from("global-data")
@@ -616,10 +617,12 @@ export const StakeStep: FC = () => {
         .rpc();
       
       let globalData_data = await program.account.globalData.fetchNullable(globalDataPda[0]);
+      if(!globalData_data)throw "err";
       console.log(new BN(globalData_data.feeAmount).toNumber());
 
       return tx;
     } else if (data.type === TabType.SetFee) {
+      if(!publicKey)throw "err";
       const admin = new PublicKey(publicKey.toBase58());
       let percent = new BN(data.amountSTEP);
 
@@ -640,6 +643,7 @@ export const StakeStep: FC = () => {
         .rpc();
       
       let globalData_data = await program.account.globalData.fetchNullable(globalDataPda[0]);
+      if(!globalData_data)throw "err";
       console.log(new BN(globalData_data.feePercent).toNumber());
 
       return tx;
