@@ -226,7 +226,7 @@ const Tab: FC<TabProps> = ({ type, stepTokenBalance, xStepTokenBalance, usdStep,
             placeholder="0.00"
             autoComplete='off'
             value={amountSTEP}
-            prefix={<InputPrefix iconUrl={stepIconUrl} tokenText={TOKEN_SYMBOL.STEP} />}
+            prefix={<InputPrefix showImg='1' iconUrl={stepIconUrl} tokenText={TOKEN_SYMBOL.STEP} />}
             stringMode
           />
         </StyleProvider>
@@ -253,7 +253,7 @@ const Tab: FC<TabProps> = ({ type, stepTokenBalance, xStepTokenBalance, usdStep,
             placeholder="0.00"
             autoComplete='off'
             value={amountXSTEP}
-            prefix={<InputPrefix iconUrl={xStepIconUrl} tokenText={TOKEN_SYMBOL.XSTEP} />}
+            prefix={<InputPrefix showImg='1' iconUrl={xStepIconUrl} tokenText={TOKEN_SYMBOL.XSTEP} />}
             stringMode
           />
         </StyleProvider>
@@ -438,7 +438,7 @@ const TabAdmin: FC<TabProps> = ({ type, stepTokenBalance, xStepTokenBalance, usd
             autoComplete='off'
             value={amountSTEP}
             stringMode
-            prefix={<InputPrefix showImg={'0'} tokenText={TOKEN_SYMBOL.PERCENT} />}
+            prefix={<InputPrefix showImg={'0'} iconUrl='' tokenText={TOKEN_SYMBOL.PERCENT} />}
           />
         </StyleProvider>
       </div>
