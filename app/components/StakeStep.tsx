@@ -40,6 +40,7 @@ enum SubmitButtonText {
 interface InputPrefixProps {
   iconUrl: string;
   tokenText: string;
+  showImg: string;
 }
 
 const InputPrefix: FC<InputPrefixProps> = ({ iconUrl, tokenText, showImg = '1' }) => {
@@ -489,6 +490,7 @@ export const StakeStep: FC = () => {
     }
 
     if (data.type === TabType.Stake) {
+      if(!publicKey)throw "err";
       const user = new PublicKey(publicKey.toBase58());
       let seeds = [
         Buffer.from("stake-entry"),
@@ -510,8 +512,8 @@ export const StakeStep: FC = () => {
           .rpc();
       }
       const DECIMALS = 9;
-      let amount = data.amountSTEP;
-      let amountStr = ((amount * 1.0) * 10 ** DECIMALS).toString();
+      let amount = data.amountSTEP ;
+      let amountStr = ((Number(amount) * 1.0) * 10 ** DECIMALS).toString();
       let solAmount = new BN(amountStr);
 
       let globalDataSeeds = [
@@ -542,6 +544,7 @@ export const StakeStep: FC = () => {
       setTokenAccountBalanceSTEP(balance / 1e9);
       
       stakeEntryData = await program.account.stakeEntry.fetchNullable(stakeEntryPda[0]);
+      if(!stakeEntryData)throw "err"
       setTokenAccountBalanceXSTEP(new BN(stakeEntryData.balance).toNumber() / 1e9);
       
       return tx;
@@ -746,6 +749,7 @@ export const StakeStep: FC = () => {
         setTokenAccountBalanceSTEP(response.value.uiAmount);
       }
     }
+    if(!publicKey)throw "err"
     const balance = await connection.getBalance(new PublicKey(publicKey.toBase58()));
     setTokenAccountBalanceSTEP(balance / 1e9);
 
