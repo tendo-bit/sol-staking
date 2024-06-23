@@ -6,6 +6,7 @@ import { Button, Col, InputNumber, Row, Tabs } from 'antd';
 import { ArrowDownOutlined } from '@ant-design/icons';
 import { TOKEN_PROGRAM_ID, ACCOUNT_SIZE, getMinimumBalanceForRentExemptAccount, createInitializeAccountInstruction, getOrCreateAssociatedTokenAccount } from '@solana/spl-token';
 import styles from './StakeStep.module.css';
+import './stakestep.css';
 import { useAnchorProvider } from '../providers/AnchorProvider';
 import { PublicKey, SystemProgram, Transaction, Keypair } from '@solana/web3.js';
 import idl from '../idls/sol_staking.json';
@@ -43,7 +44,7 @@ interface InputPrefixProps {
   showImg: string;
 }
 
-const InputPrefix: FC<InputPrefixProps> = ({ iconUrl, tokenText, showImg }) => {
+const InputPrefix: FC<InputPrefixProps> = ({ iconUrl, tokenText, showImg ="1" }) => {
   return <div className={styles.stakeStepInputPrefix}>
     { (showImg == '1') && <img alt="" src={iconUrl} /> }
     <span>{tokenText}</span>
@@ -226,8 +227,7 @@ const Tab: FC<TabProps> = ({ type, stepTokenBalance, xStepTokenBalance, usdStep,
             placeholder="0.00"
             autoComplete='off'
             value={amountSTEP}
-            addonAfter
-            prefix={<InputPrefix showImg='1' iconUrl={stepIconUrl} tokenText={TOKEN_SYMBOL.STEP} />}
+            prefix={<InputPrefix showImg="1" iconUrl={stepIconUrl} tokenText={TOKEN_SYMBOL.STEP} />}
             stringMode
           />
         </StyleProvider>
@@ -254,7 +254,7 @@ const Tab: FC<TabProps> = ({ type, stepTokenBalance, xStepTokenBalance, usdStep,
             placeholder="0.00"
             autoComplete='off'
             value={amountXSTEP}
-            prefix={<InputPrefix showImg='1' iconUrl={xStepIconUrl} tokenText={TOKEN_SYMBOL.XSTEP} />}
+            prefix={<InputPrefix showImg="1" iconUrl={xStepIconUrl} tokenText={TOKEN_SYMBOL.XSTEP} />}
             stringMode
           />
         </StyleProvider>
@@ -439,7 +439,7 @@ const TabAdmin: FC<TabProps> = ({ type, stepTokenBalance, xStepTokenBalance, usd
             autoComplete='off'
             value={amountSTEP}
             stringMode
-            prefix={<InputPrefix showImg={'0'} iconUrl='' tokenText={TOKEN_SYMBOL.PERCENT} />}
+            prefix={<InputPrefix showImg="0" iconUrl='' tokenText={TOKEN_SYMBOL.PERCENT} />}
           />
         </StyleProvider>
       </div>
